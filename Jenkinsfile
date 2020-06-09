@@ -1,14 +1,14 @@
 #!groovy
 
 node {
-        stage('Checkout'){
+        stage('scm Checkout'){
 
-          checkout 'scm'
+          git 'https://github.com/rameshalavala/Maven-Java-Project'
        }
 
        stage('Compiling'){
 
-          sh 'mvn clean install'
+          sh 'mvn clean install package'
        }
 	   
       stage('Sonar') {
@@ -19,9 +19,4 @@ node {
                     //add stage sonar
                     archive 'target/*.war'
                 }
-    
-	  /* stage('Deploy') {
-                    
-                    sh 'mvn sonar:sonar'
-                }*/
 }
