@@ -1,13 +1,9 @@
 #!groovy
 
 node {
-    currentBuild.result = "SUCCESS"
+        stage('Checkout'){
 
-    try {
-
-       stage('Checkout'){
-
-          checkout scm
+          checkout 'scm'
        }
 
        stage('Compiling'){
@@ -19,40 +15,13 @@ node {
                     //add stage sonar
                     sh 'mvn sonar:sonar'
                 }
+	stage('artifact') {
+                    //add stage sonar
+                    archive 'target/*.war'
+                }
+    
 	  /* stage('Deploy') {
                     
                     sh 'mvn sonar:sonar'
                 }*/
-	   
-	stage('Checkstyle') {
-                    sh 'mvn checkstyle:checkstyle'
-                }
-
-               stage('PMD') {
-                    sh 'mvn pmd:check'
-                }
-      /* stage('mail'){
-
-         mail body: 'project build successful',
-                     from: 'abc@gmail.com',
-                     replyTo: 'xyz@gmail.com',
-                     subject: 'project build successful',
-                     to: 'xyz@gmail.com'
-       }*/
-	    
-	    
-
-    }
-    catch (err) {
-
-        currentBuild.result = "FAILURE"
-
-           /* mail body: "project build error is here: ${env.BUILD_URL}" ,
-            from: 'abc@gmail.com',
-            replyTo: 'xyz@gmail.com',
-            subject: 'project build failed',
-            to: 'xyz@gmail.com'
-            */
-        throw err
-    }
 }
