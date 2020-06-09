@@ -8,15 +8,14 @@ node {
 
        stage('Compiling'){
 
-          sh 'mvn clean install package'
+	       sh "${mvnHome}/bin/mvn package"
        }
 	   
       stage('Sonar') {
                     //add stage sonar
-                    sh 'mvn sonar:sonar'
+	      withSonarQubeEnv('sonarqube'){
+		      sh "${mvnHome}/bin/mvn sonar:sonar"
                 }
-	stage('artifact') {
-                    //add stage sonar
-                    archive 'target/*.war'
-                }
+      }
+	
 }
