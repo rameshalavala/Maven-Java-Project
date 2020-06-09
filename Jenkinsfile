@@ -19,7 +19,11 @@ node {
                     //add stage sonar
                     sh 'mvn sonar:sonar'
                 }
-	    
+	  /* stage('Deploy') {
+                    
+                    sh 'mvn sonar:sonar'
+                }*/
+	   
 	stage('Checkstyle') {
                     sh 'mvn checkstyle:checkstyle'
                 }
@@ -30,10 +34,10 @@ node {
       /* stage('mail'){
 
          mail body: 'project build successful',
-                     from: 'devopstrainingblr@gmail.com',
-                     replyTo: 'mithunreddytechnologies@gmail.com',
+                     from: 'abc@gmail.com',
+                     replyTo: 'xyz@gmail.com',
                      subject: 'project build successful',
-                     to: 'mithunreddytechnologies@gmail.com'
+                     to: 'xyz@gmail.com'
        }*/
 	    
 	    
@@ -44,10 +48,10 @@ node {
         currentBuild.result = "FAILURE"
 
            /* mail body: "project build error is here: ${env.BUILD_URL}" ,
-            from: 'devopstrainingblr@gmail.com',
-            replyTo: 'mithunreddytechnologies@gmail.com',
+            from: 'abc@gmail.com',
+            replyTo: 'xyz@gmail.com',
             subject: 'project build failed',
-            to: 'mithunreddytechnologies@gmail.com'
+            to: 'xyz@gmail.com'
             */
         throw err
     }
