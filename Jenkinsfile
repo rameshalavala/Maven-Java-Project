@@ -1,21 +1,32 @@
-#!groovy
+pipeline {
+agent any
+stages {
 
-node {
-        stage('scm Checkout'){
+stage('checkout'){
+steps {
+git 'https://github.com/LovesCloud/java-tomcat-maven-example'
 
-          git 'https://github.com/rameshalavala/Maven-Java-Project'
-       }
+}
+}
+stage ('compile stage'){
+steps {
+	//get maven home path
+def mvnHome = tool name: 'maven 3.6.3', type: 'maven'
+	sh "${mvnHome}/bin/mvn package"
+}
+}
+stage ('testing stage'){
+steps {
+def mvnHome = tool name: 'maven 3.6.3', type: 'maven'
+	sh "${mvnHome}/bin/mvn test"
+}
+}
+stage ('Deployment stage'){
+steps {
+def mvnHome = tool name: 'maven 3.6.3', type: 'maven'
+	sh "${mvnHome}/bin/mvn deploy"
 
-       stage('Compiling'){
-
-	       sh "${mvnHome}/bin/mvn package"
-       }
-	   
-      stage('Sonar') {
-                    //add stage sonar
-	      withSonarQubeEnv('sonarqube'){
-		      sh "${mvnHome}/bin/mvn sonar:sonar"
-                }
-      }
-	
+}
+}
+}
 }
