@@ -14,6 +14,6 @@ git 'https://github.com/LovesCloud/java-tomcat-maven-example'
           // build step
           def mvnHome = tool name: 'maven 3.6.3', type: 'maven'
 	sh "${mvnHome}/bin/mvn deploy"
-
+	}
 	
 }
